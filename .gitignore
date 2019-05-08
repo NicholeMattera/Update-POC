@@ -1,0 +1,5 @@
+.vscode/ipch
+build
+*.elf
+*.nacp
+*.nro

@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/include/**",
+                "/opt/devkitpro/libnx/include/**",
+                "/opt/devkitpro/portlibs/switch/include/**",
+                "/opt/devkitpro/devkitA64/include/**"
+            ],
+            "defines": [
+                "__SWITCH__"
+            ],
+            "compilerPath": "/opt/devkitpro/devkitA64/bin/aarch64-none-elf-gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-x64"
+        }
+    ],
+    "version": 4
+}
