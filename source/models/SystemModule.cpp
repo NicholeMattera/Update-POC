@@ -130,6 +130,8 @@ namespace UpdatePOC {
             _name = json_string_value(nameJsonObject);
             _version = json_string_value(versionJsonObject);
             _requiresReboot = json_boolean_value(requireRebootJsonObject);
+
+            json_decref(root);
         }
     }
 }
