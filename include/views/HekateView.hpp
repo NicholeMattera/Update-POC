@@ -28,7 +28,9 @@ namespace UpdatePOC {
             void draw(u64 kDown);
         
         private:
-            std::string _version = "";
+            u32 _major = 0;
+            u32 _minor = 0;
+            u32 _micro = 0;
 
             bool _getVersion();
 

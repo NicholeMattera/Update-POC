@@ -32,7 +32,7 @@ namespace UpdatePOC {
             cout << "------------------\n\n";
 
             if (_getVersion()) {
-                cout << "Current Version Installed: " << _version << "\n\n";
+                cout << "Current Version Installed: " << _major << "." << _minor << "." << _micro << "\n\n";
             }
             else {
                 cout << "Failed to get current version installed.\n\n";
@@ -48,9 +48,9 @@ namespace UpdatePOC {
     }
 
     bool HekateView::_getVersion() {
-        // We already have the version no need to parse it again.
-        if (_version != "") {
-            return;
+        // We already have the version no need to call again.
+        if (_micro != 0 || _minor != 0 || _major != 0) {
+            return true;
         }
 
         ifstream file("sdmc:/bootloader/update.bin", ios::binary);
@@ -76,22 +76,18 @@ namespace UpdatePOC {
         // Were we able to reach the end of the file?
         if (file.eof()) {
             // Try to find the header string in the binary.
-            auto startPos = content.find("hekate - CTCaer mod v");
+            auto startPos = content.find("ICTC");
             if (startPos == string::npos) {
                 file.close();
                 return false;
             }
+            startPos += 4;
 
-            startPos += 21;
-            // Find the next null character as that will be the end of the header string.
-            auto endPos = content.find('\0', startPos);
-            if (endPos == string::npos) {
-                file.close();
-                return false;
-            }
-
-            // Slice the version number out of the header string.
-            _version = content.substr(startPos, (endPos - startPos));
+            // Slice out the version number.
+            auto version = content.substr(startPos, 3);
+            _major = version[0] - 0x30;
+            _minor = version[1] - 0x30;
+            _micro = version[2] - 0x30;
         }
 
         file.close();
